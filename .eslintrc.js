@@ -29,6 +29,7 @@ module.exports = {
     ],
     'no-extra-semi': 'error',
     '@typescript-eslint/semi': ['error', 'never'], // Add this line
+    'comma-dangle': ['error', 'always-multiline'], // Enforce trailing commas
   },
   settings: {
     react: {
