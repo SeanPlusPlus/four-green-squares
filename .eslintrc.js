@@ -17,8 +17,7 @@ module.exports = {
     'next/core-web-vitals',
   ],
   rules: {
-    // Add your custom rules here
-    'no-extra-semi': 'error',
+    // Custom rules
     '@typescript-eslint/no-unused-vars': ['error'],
     'react/react-in-jsx-scope': 'off', // Not needed with Next.js
     'import/order': [
@@ -28,10 +27,12 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'no-extra-semi': 'error',
+    '@typescript-eslint/semi': ['error', 'never'], // Add this line
   },
   settings: {
     react: {
       version: 'detect',
     },
   },
-};
+}
