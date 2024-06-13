@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -15,7 +15,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Button } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 
 const SortableItem = ({ id }) => {
   const {
@@ -50,6 +50,7 @@ const SortableItem = ({ id }) => {
 
 const SortableVerticalList = (props) => {
   const [items, setItems] = React.useState(props.data.map((el) => el.text));
+  const [showModal, setShowModal] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -74,24 +75,43 @@ const SortableVerticalList = (props) => {
   const handleSubmit = () => {
     console.log('* items', items)
     console.log('* data', props.data)
+    setShowModal(true)
+  }
+
+  const handleRefresh = () => {
+    window.location.reload()
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        {items.map((id) => (
-          <SortableItem key={id} id={id} />
-        ))}
-      </SortableContext>
+    <>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          {items.map((id) => (
+            <SortableItem key={id} id={id} />
+          ))}
+        </SortableContext>
 
-      <Button variant="primary" className='md:w-96' onClick={handleSubmit}>
-        Submit
-      </Button>
-    </DndContext>
+        <Button variant="primary" className='md:w-96' onClick={handleSubmit}>
+          Submit
+        </Button>
+      </DndContext>
+
+      <Modal show={showModal}>
+        <Modal.Header>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleRefresh}>
+            Play Again
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
