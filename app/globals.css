@@ -32,3 +32,7 @@ body {
 .no-bottom-padding-margin {
   margin-bottom: 0 !important;
 }
+
+.result {
+  margin-bottom: 20px;
+}

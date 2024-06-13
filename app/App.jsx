@@ -48,8 +48,13 @@ const SortableItem = ({ id }) => {
   );
 };
 
+function sortByYear(eventsArray) {
+  return eventsArray.sort((a, b) => a.year - b.year);
+}
+
 const SortableVerticalList = (props) => {
-  const [items, setItems] = React.useState(props.data.map((el) => el.text));
+  const [events] = useState(sortByYear(props.data))
+  const [items, setItems] = useState(props.data.map((el) => el.text));
   const [showModal, setShowModal] = useState(false);
 
   const sensors = useSensors(
@@ -74,7 +79,7 @@ const SortableVerticalList = (props) => {
 
   const handleSubmit = () => {
     console.log('* items', items)
-    console.log('* data', props.data)
+    console.log('* events', events)
     setShowModal(true)
   }
 
@@ -102,9 +107,46 @@ const SortableVerticalList = (props) => {
 
       <Modal show={showModal}>
         <Modal.Header>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Results</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <ul>
+            {events.map((el, i) => (
+              <li key={el.text} className='result'>
+                <p className='text-muted mb-2'>
+                  <small>
+                    {el.year}
+                  </small>
+                </p>
+                {el.text === items[i] && (
+                  <span>
+                    🟩 &nbsp; 
+                  </span>
+                )}
+                {el.text !== items[i] && (
+                  <span>
+                    ❌ &nbsp; 
+                  </span>
+                )}
+                <span>
+                  {el.text}
+                </span>
+                <div>
+                {el.text !== items[i] && (
+                  <p className='text-muted float-right'>
+                    <small>
+                      (Your guess: { items.indexOf(el.text) + 1 })
+                    </small>
+                  </p>
+                )}
+                </div>
+                { i !== 3 && (
+                  <hr className='mt-8' />
+                )}
+              </li>
+            ))}
+          </ul>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleRefresh}>
             Play Again

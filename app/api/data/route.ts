@@ -36,6 +36,7 @@ export async function GET() {
   ]
 
   return NextResponse.json({
-    events: shuffleArray(events)
+    // events: shuffleArray(events)
+    events,
   })
 }
