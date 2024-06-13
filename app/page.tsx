@@ -32,7 +32,14 @@ export default function Home() {
       return array.map((item: any, index: any) => (index === idx ? newValue : item));
     }
 
-    if (occupied) {}
+    if (occupied) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > idx; i--) {
+        newArray[i] = newArray[i - 1];
+      }
+      newArray[idx] = newValue;
+      return newArray;
+    }
 
     return array
   }
@@ -44,7 +51,12 @@ export default function Home() {
     setOrdered(updated)
 
     const filtered = data.filter((i) => (i.id !== item.id))
-    setData(filtered)
+    const reAdd = (idx === 3 && occupied !== null)
+    if (reAdd) {
+      setData(filtered.concat(occupied))
+    } else {
+      setData(filtered)
+    }
   }
 
   return (
