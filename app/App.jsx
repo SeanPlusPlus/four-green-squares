@@ -34,6 +34,7 @@ const SortableItem = ({ id }) => {
     backgroundColor: '#fff',
     border: '1px solid #ddd',
     borderRadius: '4px',
+    touchAction: 'none'
   };
 
   return (
