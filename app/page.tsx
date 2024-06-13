@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Card, Alert } from 'react-bootstrap'
+import { Container, Row, Col, Card, Alert, Button, ButtonGroup } from 'react-bootstrap'
 import axios from 'axios'
 import LoadingIcon from './LoadingIcon'
 
@@ -22,6 +22,10 @@ export default function Home() {
     fetchData()
   }, [])
 
+  const handleClick = (i: any, n: any) => {
+    console.log(i, n)
+  }
+
   return (
     <Container>
       <Row>
@@ -37,14 +41,32 @@ export default function Home() {
           <LoadingIcon />
         )}
 
+
         {data.length > 0 && (
-          data.map((item: any) => (
-            <Card key={item.text} className='md:w-96'>
-              <div className='card-body'>
-                <p>{item.text}</p>
-              </div>
-            </Card>
-          ))
+          <>
+          <Alert variant="primary" className="no-bottom-padding-margin">
+            Order these events from earliest to most recent
+          </Alert>
+          {
+            data.map((item: any) => (
+              <Card key={item.text} className='md:w-96'>
+                <div className='card-body'>
+                  <p>{item.text}</p>
+                  <div className="custom-button-group float-right">
+                    {[1, 2, 3, 4].map((buttonNumber) => (
+                      <Button 
+                        key={buttonNumber} 
+                        variant="dark" 
+                        onClick={() => handleClick(item, buttonNumber)}
+                      >
+                        {buttonNumber}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </>
         )}
 
         </Col>

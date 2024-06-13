@@ -3,6 +3,14 @@ import { NextResponse } from "next/server"
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
+
 export async function GET() {
   const events = [
     {
@@ -24,6 +32,6 @@ export async function GET() {
   ]
 
   return NextResponse.json({
-    events,
+    events: shuffleArray(events)
   })
 }
