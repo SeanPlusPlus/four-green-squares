@@ -18,6 +18,7 @@ module.exports = {
   ],
   rules: {
     // Custom rules
+    '@typescript-eslint/no-explicit-any': 'allow',
     '@typescript-eslint/no-unused-vars': ['error'],
     'react/react-in-jsx-scope': 'off', // Not needed with Next.js
     'import/order': [

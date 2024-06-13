@@ -1,37 +1,52 @@
-import { Container, Row, Col, Card } from 'react-bootstrap'
+'use client'
 
-const cards = [
-  {
-    year: 1966,
-    text: "The first artificial heart was successfully implanted in a human. This groundbreaking medical achievement marked a significant advancement in cardiac surgery.",
-  },
-  {
-    year: 1975,
-    text: "The Vietnam War officially ended with the Fall of Saigon on April 30, marking the capture of the South Vietnamese capital by the People's Army of Vietnam and the Viet Cong. This event led to the unconditional surrender of South Vietnam and the reunification of Vietnam under communist control.",
-  },
-  {
-    year: 1981,
-    text: "The first launch of the Space Shuttle program occurred with the successful mission of Columbia. This marked a new era in reusable spacecraft for NASA.",
-  },
-  {
-    year: 1983,
-    text: "The Nintendo Entertainment System (NES) was released in Japan. It revolutionized the video game industry and became a global phenomenon.",
-  },
-]
-
+import { useState, useEffect } from 'react'
+import { Container, Row, Col, Card, Alert } from 'react-bootstrap'
+import axios from 'axios'
+import LoadingIcon from './LoadingIcon'
 
 export default function Home() {
+  const [data, setData] = useState([])
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/data')
+        setData(response?.data?.events)
+      } catch (err) {
+        setError('Error fetching data. Please reload the page.')
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <Container>
       <Row>
         <Col className="d-grid justify-content-center gap-2">
-          { cards.map((card) => (
-            <Card key={card.text} style={{ width: '18rem' }}>
+
+        {error.length > 0 && (
+          <Alert variant="danger">
+            {error}
+          </Alert>
+        )}
+
+        {data.length === 0 && error === '' && (
+          <LoadingIcon />
+        )}
+
+        {data.length > 0 && (
+          data.map((item: any) => (
+            <Card key={item.text} className='md:w-96'>
               <div className='card-body'>
-                <p>{card.text}</p>
+                <p>{item.text}</p>
               </div>
             </Card>
-          ))}
+          ))
+        )}
+
         </Col>
       </Row>
     </Container>
