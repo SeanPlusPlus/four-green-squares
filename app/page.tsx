@@ -64,8 +64,8 @@ export default function Home() {
 
           {loading === false && (
             <>
-              <Alert variant="primary" className="no-bottom-padding-margin">
-                Order these events from earliest to most recent
+              <Alert variant="primary" className="no-bottom-padding-margin md:w-96">
+                Order these events from earliest to latest
               </Alert>
 
               {ordered.map((item: any, i: number) => (
