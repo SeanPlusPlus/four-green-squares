@@ -26,36 +26,23 @@ export default function Home() {
     fetchData()
   }, [])
 
-  const updateIndex = (array: any, idx: number, newValue: any, occupied: any): any => {
+  const updateIndex = (array: any, idx: number, newValue: any): any => {
     // empty slot in ordered
-    if (array[idx] === null) {
-      return array.map((item: any, index: any) => (index === idx ? newValue : item));
-    }
-
-    if (occupied) {
-      const newArray = [...array];
-      for (let i = newArray.length - 1; i > idx; i--) {
-        newArray[i] = newArray[i - 1];
-      }
-      newArray[idx] = newValue;
-      return newArray;
-    }
-
-    return array
+    return array.map((item: any, index: any) => (index === idx ? newValue : item));
   }
 
-  const handleClick = (item: any, pos: any) => {
+  const handleClick = (item: any, pos: any, orderedSet = false) => {
     const idx = pos - 1
     const occupied = ordered[idx]
-    const updated = updateIndex(ordered, idx, item, occupied)
+    const updated = updateIndex(ordered, idx, item)
+
     setOrdered(updated)
 
-    const filtered = data.filter((i) => (i.id !== item.id))
-    const reAdd = (idx === 3 && occupied !== null)
-    if (reAdd) {
-      setData(filtered.concat(occupied))
+    const filteredData = data.filter((i) => (i.id !== item.id))
+    if (occupied) {
+      setData(filteredData.concat(occupied))
     } else {
-      setData(filtered)
+      setData(filteredData)
     }
   }
 
@@ -90,7 +77,7 @@ export default function Home() {
                           <Button 
                             key={buttonNumber} 
                             variant={i + 1 === buttonNumber ? "primary" : "secondary"}
-                            onClick={() => handleClick(item, buttonNumber)}
+                            onClick={() => handleClick(item, buttonNumber, true)}
                           >
                             {buttonNumber}
                           </Button>
