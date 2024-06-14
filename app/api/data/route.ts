@@ -14,14 +14,6 @@ const openai = new OpenAIApi({
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-function shuffleArray(array: any) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-  }
-  return array;
-}
-
 export async function GET() {
   const currentYear = dayjs().year()
   const lowerBound = currentYear - 200
@@ -31,7 +23,7 @@ export async function GET() {
 
   // prompts
   const prompts = randomYears.map((year) => ({
-    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year at all. Do not mention any year. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one sentence long.`
+    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year at all. Do not mention any year. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one or two sentences long.`
   }));
   
   // completions
