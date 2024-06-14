@@ -46,7 +46,7 @@ export default function Home() {
             <>
               <Alert variant="primary" className="no-bottom-padding-margin md:w-96">
                 <p className='text-sm'>
-                  Order these events from most recent to latest
+                  Order these events from most recent to oldest 
                 </p>
               </Alert>
 
