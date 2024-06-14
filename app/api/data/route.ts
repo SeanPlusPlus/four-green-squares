@@ -24,9 +24,9 @@ function shuffleArray(array: any) {
 
 export async function GET() {
   const currentYear = dayjs().year()
-  const lowerBound = currentYear - 100
+  const lowerBound = currentYear - 200
   const randomYearUpperBound = _random(lowerBound, currentYear)
-  const randomYearLowerBound = randomYearUpperBound - 40 
+  const randomYearLowerBound = randomYearUpperBound - 100 
   const randomYears = _times(4, () => _random(randomYearLowerBound, randomYearUpperBound));
 
   // prompts
