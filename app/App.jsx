@@ -48,12 +48,12 @@ const SortableItem = ({ id }) => {
   );
 };
 
-function sortByYear(eventsArray) {
-  return eventsArray.sort((a, b) => a.year - b.year);
+function sortByMostRecentYear(data) {
+  return data.sort((a, b) => b.year - a.year);
 }
 
 const SortableVerticalList = (props) => {
-  const [events] = useState(sortByYear(props.data))
+  const [events] = useState(sortByMostRecentYear(props.data.slice()))
   const [items, setItems] = useState(props.data.map((el) => el.text));
   const [showModal, setShowModal] = useState(false);
 

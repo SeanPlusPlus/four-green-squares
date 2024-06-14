@@ -16,6 +16,7 @@ export default function Home() {
       try {
         const response = await axios.get('/api/data')
         setData(response?.data?.events)
+        console.log(response?.data)
         setLoading(false)
       } catch (err) {
         setError('Error fetching data. Please reload the page.')
