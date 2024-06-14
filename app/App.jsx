@@ -140,7 +140,7 @@ const SortableVerticalList = (props) => {
                   </p>
                 )}
                 </div>
-                { i !== 3 && (
+                { i !== 2 && (
                   <hr className='mt-8' />
                 )}
               </li>
