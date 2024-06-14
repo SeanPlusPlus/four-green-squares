@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import _get from 'lodash/get'
+import _random from 'lodash/random'
+import _times from 'lodash/times'
 import OpenAIApi from 'openai'
+import dayjs from 'dayjs'
 
 require('dotenv').config()
 
@@ -20,40 +23,37 @@ function shuffleArray(array: any) {
 }
 
 export async function GET() {
-  // Prompt
-  const prompt = 'Tell me a random fact about the cosmos'
+  const currentYear = dayjs().year()
+  const lowerBound = currentYear - 100
+  const randomYearUpperBound = _random(lowerBound, currentYear)
+  const randomYearLowerBound = randomYearUpperBound - 40 
+  const randomYears = _times(4, () => _random(randomYearLowerBound, randomYearUpperBound));
 
-  // Completion
+  // prompts
+  const prompts = randomYears.map((year) => ({
+    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year. The response should be one sentence long.`
+  }));
+  
+  // completions
   const model = 'gpt-3.5-turbo'
-  const chatCompletion = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: prompt }],
-    model
-  })
-
-  // Output
-  const output = _get(chatCompletion, 'choices[0].message.content')
-
-  const events = [
-    {
-      year: 1983,
-      text: "The Nintendo Entertainment System (NES) was released in Japan.",
-    },
-    {
-      year: 1981,
-      text: "The first launch of the Space Shuttle program occurred with the successful mission of Columbia.",
-    },
-    {
-      year: 1975,
-      text: "The Vietnam War officially ended with the Fall of Saigon on April 30, marking the capture of the South Vietnamese capital by the People's Army of Vietnam and the Viet Cong.",
-    },
-    {
-      year: 1966,
-      text: "The first artificial heart was successfully implanted in a human.",
-    },
-  ]
+  const chatCompletions = await Promise.all(
+    prompts.map(async ({ prompt }) => {
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model
+      });
+  
+      return completion;
+    })
+  );
+  
+  // outputs
+  const events = chatCompletions.map((completion, index) => ({
+    year: randomYears[index],
+    text: _get(completion, 'choices[0].message.content')
+  }));
 
   return NextResponse.json({
-    events: shuffleArray(events),
-    output,
+    events,
   })
 }
