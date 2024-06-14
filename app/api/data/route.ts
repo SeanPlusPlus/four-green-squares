@@ -1,4 +1,12 @@
 import { NextResponse } from "next/server"
+import _get from 'lodash/get'
+import OpenAIApi from 'openai'
+
+require('dotenv').config()
+
+const openai = new OpenAIApi({
+  apiKey: process.env.OPENAI_API_KEY
+})
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -12,6 +20,19 @@ function shuffleArray(array: any) {
 }
 
 export async function GET() {
+  // Prompt
+  const prompt = 'Tell me a random fact about the cosmos'
+
+  // Completion
+  const model = 'gpt-3.5-turbo'
+  const chatCompletion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: prompt }],
+    model
+  })
+
+  // Output
+  const output = _get(chatCompletion, 'choices[0].message.content')
+
   const events = [
     {
       year: 1983,
@@ -32,7 +53,7 @@ export async function GET() {
   ]
 
   return NextResponse.json({
-    events: shuffleArray(events)
-    // events,
+    events: shuffleArray(events),
+    output,
   })
 }
