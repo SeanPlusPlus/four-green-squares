@@ -27,7 +27,7 @@ export async function GET() {
   const lowerBound = currentYear - 200
   const randomYearUpperBound = _random(lowerBound, currentYear)
   const randomYearLowerBound = randomYearUpperBound - 100 
-  const randomYears = _times(4, () => _random(randomYearLowerBound, randomYearUpperBound));
+  const randomYears = _times(3, () => _random(randomYearLowerBound, randomYearUpperBound));
 
   // prompts
   const prompts = randomYears.map((year) => ({
