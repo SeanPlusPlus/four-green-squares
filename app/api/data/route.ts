@@ -31,7 +31,7 @@ export async function GET() {
 
   // prompts
   const prompts = randomYears.map((year) => ({
-    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year. The response should be one sentence long.`
+    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year at all. Do not mention any year. This response is going to be used a in a history trivia game. The response should be one sentence long.`
   }));
   
   // completions
