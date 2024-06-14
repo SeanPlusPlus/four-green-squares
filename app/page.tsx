@@ -45,7 +45,9 @@ export default function Home() {
           {data.length > 0 && (
             <>
               <Alert variant="primary" className="no-bottom-padding-margin md:w-96">
-                Order these events from earliest to latest
+                <p className='text-sm'>
+                  Order these events from most recent to latest
+                </p>
               </Alert>
 
               <App data={data} />
