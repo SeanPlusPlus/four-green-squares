@@ -21,7 +21,7 @@ export async function GET() {
 
   // prompts
   const prompts = randomYears.map((year) => ({
-    prompt: `Tell me about an historical event that occurred in the year ${year}. The event can be literary, scientific, artistic, athletic, political, the year someone famous was born or died or did something interesting. However, do not mention the year at all. Do not mention any year at all in your response. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one or two sentences long.`
+    prompt: `Tell me about an historical event that occurred in the year ${year}. The event can be literary, scientific, artistic, athletic, political, the year someone famous was born or died or did something interesting. However, do not mention the year at all. Do not mention any year at all in your response. You can mention any names or places or events though. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one or two sentences long.`
   }));
   
   // completions
