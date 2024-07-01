@@ -15,15 +15,13 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function GET() {
-  const currentYear = dayjs().year()
   const lowerBound = 1900
-  const randomYearUpperBound = _random(lowerBound, currentYear)
-  const randomYearLowerBound = randomYearUpperBound - 100 
-  const randomYears = _times(3, () => _random(randomYearLowerBound, randomYearUpperBound));
+  const currentYear = dayjs().year()
+  const randomYears = _times(3, () => _random(lowerBound, currentYear));
 
   // prompts
   const prompts = randomYears.map((year) => ({
-    prompt: `Tell me about an historical event that occurred in the year ${year}. Do not mention the year at all. Do not mention any year. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one or two sentences long.`
+    prompt: `Tell me about an historical event that occurred in the year ${year}. The event can be literary, scientific, artistic, athletic, political, the year someone famous was born or died or did something interesting. However, do not mention the year at all. Do not mention any year at all in your response. This response is going to be used a in a history trivia game so make sure it is interesting! The response should be one or two sentences long.`
   }));
   
   // completions
