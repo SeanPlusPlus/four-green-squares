@@ -16,7 +16,7 @@ export const revalidate = 0
 
 export async function GET() {
   const currentYear = dayjs().year()
-  const lowerBound = currentYear - 200
+  const lowerBound = 1900
   const randomYearUpperBound = _random(lowerBound, currentYear)
   const randomYearLowerBound = randomYearUpperBound - 100 
   const randomYears = _times(3, () => _random(randomYearLowerBound, randomYearUpperBound));

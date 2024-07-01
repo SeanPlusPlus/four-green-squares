@@ -6,8 +6,22 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Four Square History",
-  description: "The Daily History Trivia Game",
+  title: "Three Square History",
+  description: "The AI Powered History Trivia Game",
+  openGraph: {
+    title: "Three Square History",
+    description: "The AI Powered History Trivia Game",
+    url: "https://three-square-history.vercel.app/",
+    type: "website",
+    images: [
+      {
+        url: "https://three-square-history.vercel.app/logo.png",
+        width: 800,
+        height: 800,
+        alt: "Three Square History Logo",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
